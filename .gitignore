@@ -1,0 +1,14 @@
+Debug/
+OBJ/
+*.o
+*.d
+*.out
+*.map
+*.ccsproject
+*.cproject
+*.project
+.settings/
+.idea/
+*.TMP
+*.tmp
+__pycache__/

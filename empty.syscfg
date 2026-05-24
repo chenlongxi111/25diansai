@@ -1,0 +1,99 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "MSPM0G350X" --part "Default" --package "LQFP-64(PM)" --product "mspm0_sdk@2.05.01.01"
+ * @v2CliArgs --device "MSPM0G3507" --package "LQFP-64(PM)" --product "mspm0_sdk@2.05.01.01"
+ * @versions {"tool":"1.24.0+4110"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const GPIO   = scripting.addModule("/ti/driverlib/GPIO", {}, false);
+const GPIO1  = GPIO.addInstance();
+const GPIO2  = GPIO.addInstance();
+const GPIO3  = GPIO.addInstance();
+const GPIO4  = GPIO.addInstance();
+const PWM    = scripting.addModule("/ti/driverlib/PWM", {}, false);
+const PWM1   = PWM.addInstance();
+const SYSCTL = scripting.addModule("/ti/driverlib/SYSCTL");
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+GPIO1.$name                              = "GPIO_GRP_0";
+GPIO1.associatedPins.create(4);
+GPIO1.associatedPins[0].$name            = "AD0_X1";
+GPIO1.associatedPins[0].pin.$assign      = "PB26";
+GPIO1.associatedPins[1].$name            = "AD1_X2";
+GPIO1.associatedPins[1].pin.$assign      = "PB27";
+GPIO1.associatedPins[2].$name            = "AD2_X3";
+GPIO1.associatedPins[2].pin.$assign      = "PB0";
+GPIO1.associatedPins[3].$name            = "OUT_X4";
+GPIO1.associatedPins[3].direction        = "INPUT";
+GPIO1.associatedPins[3].internalResistor = "PULL_UP";
+GPIO1.associatedPins[3].pin.$assign      = "PB1";
+
+const Board = scripting.addModule("/ti/driverlib/Board", {}, false);
+
+GPIO2.$name                         = "GPIO_GRP_1";
+GPIO2.associatedPins.create(5);
+GPIO2.associatedPins[0].$name       = "MOTOR_STBY";
+GPIO2.associatedPins[0].pin.$assign = "PA7";
+GPIO2.associatedPins[1].$name       = "MOTOR_IN1_L";
+GPIO2.associatedPins[1].pin.$assign = "PA14";
+GPIO2.associatedPins[2].$name       = "MOTOR_IN2_L";
+GPIO2.associatedPins[2].pin.$assign = "PA15";
+GPIO2.associatedPins[3].$name       = "MOTOR_IN1_R";
+GPIO2.associatedPins[3].pin.$assign = "PA13";
+GPIO2.associatedPins[4].$name       = "MOTOR_IN2_R";
+GPIO2.associatedPins[4].pin.$assign = "PA12";
+
+GPIO3.$name                              = "BTN";
+GPIO3.associatedPins.create(2);
+GPIO3.associatedPins[0].$name            = "BTN_COUNT";
+GPIO3.associatedPins[0].direction        = "INPUT";
+GPIO3.associatedPins[0].internalResistor = "PULL_UP";
+GPIO3.associatedPins[0].pin.$assign      = "PA21";
+GPIO3.associatedPins[1].$name            = "BTN_START";
+GPIO3.associatedPins[1].direction        = "INPUT";
+GPIO3.associatedPins[1].internalResistor = "PULL_UP";
+GPIO3.associatedPins[1].pin.$assign      = "PA22";
+
+GPIO4.$name                         = "GPIO_OLED";
+GPIO4.associatedPins.create(2);
+GPIO4.associatedPins[0].$name       = "SCL";
+GPIO4.associatedPins[0].direction   = "OUTPUT";
+GPIO4.associatedPins[0].pin.$assign = "PA11";
+GPIO4.associatedPins[1].$name       = "SDA";
+GPIO4.associatedPins[1].direction   = "OUTPUT";
+GPIO4.associatedPins[1].pin.$assign = "PA10";
+
+PWM1.$name                              = "PWM_MOTOR";
+PWM1.peripheral.ccp0Pin.$assign         = "PA26";
+PWM1.peripheral.ccp1Pin.$assign         = "PA27";
+PWM1.PWM_CHANNEL_0.$name                = "ti_driverlib_pwm_PWMTimerCC0";
+PWM1.PWM_CHANNEL_1.$name                = "ti_driverlib_pwm_PWMTimerCC1";
+PWM1.ccp0PinConfig.direction            = scripting.forceWrite("OUTPUT");
+PWM1.ccp0PinConfig.hideOutputInversion  = scripting.forceWrite(false);
+PWM1.ccp0PinConfig.onlyInternalResistor = scripting.forceWrite(false);
+PWM1.ccp0PinConfig.passedPeripheralType = scripting.forceWrite("Digital");
+PWM1.ccp0PinConfig.$name                = "ti_driverlib_gpio_GPIOPinGeneric0";
+PWM1.ccp1PinConfig.direction            = scripting.forceWrite("OUTPUT");
+PWM1.ccp1PinConfig.hideOutputInversion  = scripting.forceWrite(false);
+PWM1.ccp1PinConfig.onlyInternalResistor = scripting.forceWrite(false);
+PWM1.ccp1PinConfig.passedPeripheralType = scripting.forceWrite("Digital");
+PWM1.ccp1PinConfig.$name                = "ti_driverlib_gpio_GPIOPinGeneric0_1";
+
+SYSCTL.forceDefaultClkConfig = true;
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+Board.peripheral.$suggestSolution          = "DEBUGSS";
+Board.peripheral.swclkPin.$suggestSolution = "PA20";
+Board.peripheral.swdioPin.$suggestSolution = "PA19";
+PWM1.peripheral.$suggestSolution           = "TIMG7";
+SYSCTL.peripheral.$suggestSolution         = "SYSCTL";
